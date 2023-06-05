@@ -27,7 +27,4 @@ public class Producer {
 
     @Column(name = "phone_num")
     private String phoneNum;
-
-    @OneToMany(mappedBy = "producer")
-    private Set<Detail> details;
 }

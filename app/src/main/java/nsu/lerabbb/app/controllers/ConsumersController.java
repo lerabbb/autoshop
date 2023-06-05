@@ -1,5 +1,6 @@
 package nsu.lerabbb.app.controllers;
 
+import nsu.lerabbb.app.Logger;
 import nsu.lerabbb.app.entities.Consumer;
 import nsu.lerabbb.app.exceptions.ConsumerNotFoundException;
 import nsu.lerabbb.app.repo.ConsumerRepository;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,8 +53,6 @@ public class ConsumersController {
         curConsumer.setPatronymic(consumer.getPatronymic());
         curConsumer.setPhoneNum(consumer.getPhoneNum());
         curConsumer = repo.save(curConsumer);
-        curConsumer.setRequests(consumer.getRequests());
-        curConsumer.setSales(consumer.getSales());
         return ResponseEntity.ok(curConsumer);
     }
 
@@ -63,5 +63,25 @@ public class ConsumersController {
         }
         repo.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/detail={detail}/start={startDate}/end={endDate}")
+    public List<Consumer> readByDetailAndDate(@PathVariable Long detail, @PathVariable String startDate, @PathVariable String endDate){
+        Logger.getInstance().info("start "+startDate);
+        Logger.getInstance().info("end "+endDate);
+        Optional<List<Consumer>> optional = repo.findByDetailAndDate(detail, Date.valueOf(startDate), Date.valueOf(endDate));
+        if(optional.isEmpty()){
+            throw new RuntimeException();
+        }
+        return optional.get();
+    }
+
+    @GetMapping("/detail={detail}/count={count}")
+    public List<Consumer> readByDetailCount(@PathVariable Long detail, @PathVariable Integer count){
+        Optional<List<Consumer>> optional = repo.findByDetailCount(detail, count);
+        if(optional.isEmpty()){
+            throw new RuntimeException();
+        }
+        return optional.get();
     }
 }

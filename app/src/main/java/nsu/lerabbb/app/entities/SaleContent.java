@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Table(name = "sale_content")
 public class SaleContent {
@@ -33,4 +32,14 @@ public class SaleContent {
 
     @Column(name = "price",  columnDefinition = "DEFAULT 0")
     private Float price;
+
+    @Transient
+    private Float totalSum;
+
+
+    public SaleContent(){
+        sale= new Sale();
+        stockDetail=new Stock();
+    }
+
 }

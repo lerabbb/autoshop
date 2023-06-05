@@ -45,6 +45,23 @@ import EditSaleContent from './sales/EditSaleContent';
 import Defects from './defects/Defects';
 import AddDefect from './defects/AddDefect';
 import EditDefect from './defects/EditDefect';
+import Queries from './components/Queries';
+import Query1 from './queries/Query1';
+import Query2 from './queries/Query2';
+import Query3 from './queries/Query3';
+import Query4 from './queries/Query4';
+import Query5 from './queries/Query5';
+import Query7 from './queries/Query7';
+import Query9 from './queries/Query9';
+import Query10 from './queries/Query10';
+import Query11 from './queries/Query11';
+import Query12 from './queries/Query12';
+import Query13 from './queries/Query13';
+import Query15 from './queries/Query15';
+import Query14 from './queries/Query14';
+import Query16 from './queries/Query16';
+import Query17 from './queries/Query17';
+import Query18 from './queries/Query18';
 
 function App() {
   return (
@@ -95,6 +112,24 @@ function App() {
           <Route exact path="/adddefect" element={<AddDefect/>}/>
           <Route exact path="/editdefect" element={<EditDefect/>}/>
           <Route exact path="/about" element={<About/>}/>
+          <Route exact path="/queries" element={<Queries/>}/>
+          <Route exact path="/vendors-by-type-details" element={<Query1/>}/>
+          <Route exact path="/vendors-by-period" element={<Query2/>}/>
+          <Route exact path="/details-info" element={<Query3/>}/>
+          <Route exact path="/consumers-by-period" element={<Query4/>}/>
+          <Route exact path="/consumers-by-count" element={<Query5/>}/>
+          <Route exact path="/top10" element={<Query7/>}/>
+          <Route exact path="/average-sales" element={<Queries/>}/>
+          <Route exact path="/profit-info" element={<Query9/>}/>
+          <Route exact path="/overhead-costs" element={<Query10/>}/>
+          <Route exact path="/not-sold-details" element={<Query11/>}/>
+          <Route exact path="/defects-by-period" element={<Query12/>}/>
+          <Route exact path="/sold-details-in-day" element={<Query13/>}/>
+          <Route exact path="/cash-report" element={<Query14/>}/>
+          <Route exact path="/stock-report" element={<Query15/>}/>
+          <Route exact path="/money-velocity" element={<Query16/>}/>
+          <Route exact path="/capacity" element={<Query17/>}/>
+          <Route exact path="/requests-by-detail" element={<Query18/>}/>
         </Routes>
         <Footer/>
       </Router>

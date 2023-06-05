@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Table(name = "sales")
 public class Sale {
@@ -28,10 +27,7 @@ public class Sale {
     @JoinColumn(name = "c_id", nullable = false)
     private Consumer consumer;
 
-    @OneToMany(mappedBy = "sale")
-    private Set<SaleContent> saleContents;
-
-    @OneToMany(mappedBy = "sale")
-    private Set<Defect> defects;
-
+    public Sale(){
+        consumer = new Consumer();
+    }
 }

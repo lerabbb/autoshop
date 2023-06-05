@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -34,7 +33,7 @@ public class Vendor {
     @Column(name = "contract",  columnDefinition = "DEFAULT 0")
     private Integer contract;
 
-    @Column(name = "guarantee",  columnDefinition = "DEFAULT 0")
+    @Column(name = "v_guarantee",  columnDefinition = "DEFAULT 0")
     private Integer guarantee;
 
     @Column(name = "delivery_time",  columnDefinition = "DEFAULT 0")
@@ -44,6 +43,18 @@ public class Vendor {
     @JoinColumn(name = "type_id", nullable = false)
     private VendorType type;
 
-    @OneToMany(mappedBy = "vendor")
-    private Set<Order> orders;
+    @Transient
+    private Float averagePrice;
+
+    @Transient
+    private Integer percents;
+    @Transient
+    private Float partAsMoney;
+    @Transient
+    private Float partAsNum;
+
+//    @OneToMany(mappedBy = "order")
+//    private Set<OrderContent> orderContents;
+
+
 }

@@ -23,6 +23,6 @@ public class VendorType {
     @Column(name = "type_name")
     private String name;
 
-    @OneToMany(mappedBy = "type")
-    private Set<Vendor> vendors;
+//    @OneToMany(mappedBy = "type")
+//    private Set<Vendor> vendors;
 }

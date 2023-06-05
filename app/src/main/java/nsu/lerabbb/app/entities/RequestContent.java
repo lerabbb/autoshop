@@ -38,10 +38,4 @@ public class RequestContent {
 
     @Column(name = "notify_date",  columnDefinition = "DEFAULT CURRENT_DATE")
     private Date notifyDate;
-
-    @OneToMany(mappedBy = "book")
-    private Set<StockRequest> stockRequests;
-
-    @OneToMany(mappedBy = "book")
-    private Set<RequestHistory> requestHistories;
 }

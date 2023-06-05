@@ -22,6 +22,4 @@ public class Cell {
     @Column(name = "cell_size", columnDefinition = "DEFAULT 0")
     private Integer size;
 
-    @OneToMany(mappedBy = "cell")
-    private Set<Stock> stockDetails;
 }

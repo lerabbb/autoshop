@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 import nsu.lerabbb.app.entities.keys.OrderContentId;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Table(name = "order_content")
 public class OrderContent {
@@ -28,15 +28,20 @@ public class OrderContent {
     @JoinColumn(name = "d_id", referencedColumnName = "d_id")
     private Detail detail;
 
-    @Column(name = "count",  columnDefinition = "DEFAULT 0")
+    @Column(name = "count", columnDefinition = "DEFAULT 0")
     private Integer count;
 
-    @Column(name = "date_sent",  columnDefinition = "DEFAULT CURRENT_DATE")
+    @Column(name = "date_sent", columnDefinition = "DEFAULT CURRENT_DATE")
     private Date dateSent;
 
-    @Column(name = "date_rcvd",  columnDefinition = "DEFAULT CURRENT_DATE")
+    @Column(name = "date_rcvd", columnDefinition = "DEFAULT CURRENT_DATE")
     private Date dateRcvd;
 
-    @Column(name = "price",  columnDefinition = "DEFAULT 0")
+    @Column(name = "price", columnDefinition = "DEFAULT 0")
     private Float price;
+
+    public OrderContent(){
+        order = new Order();
+        detail = new Detail();
+    }
 }

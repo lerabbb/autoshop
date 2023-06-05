@@ -7,11 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Table(name = "consumer_requests")
 public class Request {
@@ -28,6 +26,13 @@ public class Request {
     @Column(name = "register_date",  columnDefinition = "DEFAULT CURRENT_DATE")
     private Date registerDate;
 
-    @OneToMany(mappedBy = "request")
-    private Set<RequestContent> requestContents;
+    @Transient
+    private Double count;
+
+    @Transient
+    private Float sum;
+
+    public Request(){
+        consumer = new Consumer();
+    }
 }

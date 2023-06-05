@@ -30,10 +30,4 @@ public class Consumer {
 
     @Column(name = "phone_num")
     private String phoneNum;
-
-    @OneToMany(mappedBy = "consumer")
-    private Set<Sale> sales;
-
-    @OneToMany(mappedBy = "consumer")
-    private Set<Request> requests;
 }

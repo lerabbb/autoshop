@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Table(name = "orders")
 public class Order {
@@ -27,10 +26,7 @@ public class Order {
     @JoinColumn(name = "v_id", nullable = false)
     private  Vendor vendor;
 
-    @OneToMany(mappedBy = "order")
-    private Set<OrderContent> orderContents;
-
-    @OneToMany(mappedBy = "order")
-    private Set<Stock> stockDetails;
-
+    public Order(){
+        vendor = new Vendor();
+    }
 }

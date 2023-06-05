@@ -1,14 +1,18 @@
 package nsu.lerabbb.app.controllers;
 
 import lombok.AllArgsConstructor;
+import nsu.lerabbb.app.Logger;
 import nsu.lerabbb.app.entities.Defect;
 import nsu.lerabbb.app.repo.DefectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,4 +68,25 @@ public class DefectController {
         return ResponseEntity.ok().build();
     }
 
+
+    @GetMapping("/start={startDate}/end={endDate}")
+    public List<Defect> readByDate(@PathVariable String startDate, @PathVariable String endDate){
+        Logger.getInstance().info("start "+startDate);
+        Logger.getInstance().info("end "+endDate);
+        Optional<List<Object[]>> optional = repo.findByDate(Date.valueOf(startDate), Date.valueOf(endDate));
+        if(optional.isEmpty()){
+            throw new RuntimeException();
+        }
+        List<Defect> result = new ArrayList<>();
+        for(Object[] obj: optional.get()){
+            Defect defect = new Defect();
+            defect.getStockDetail().getDetail().setId(((BigDecimal) obj[0]).longValue());
+            defect.getStockDetail().getDetail().setName((String) obj[1]);
+            defect.setCount(((Float) obj[2]).intValue());
+            defect.getStockDetail().getOrder().getVendor().setId(((BigDecimal) obj[3]).longValue());
+            defect.getStockDetail().getOrder().getVendor().setName((String) obj[4]);
+            result.add(defect);
+        }
+        return result;
+    }
 }

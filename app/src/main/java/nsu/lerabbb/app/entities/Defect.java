@@ -8,7 +8,6 @@ import nsu.lerabbb.app.entities.keys.SaleContentId;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Table(name = "defects")
 public class Defect {
@@ -35,4 +34,8 @@ public class Defect {
     @Column(name = "refund_to_consumer", columnDefinition = "DEFAULT 0")
     private Float refundToConsumer;
 
+    public Defect(){
+        sale= new Sale();
+        stockDetail=new Stock();
+    }
 }

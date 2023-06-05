@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Set;
 
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Table(name = "details")
 public class Detail {
@@ -34,13 +34,29 @@ public class Detail {
     @JoinColumn(name = "p_id", nullable = false)
     private  Producer producer;
 
-    @OneToMany(mappedBy = "detail")
-    private Set<Stock> stockDetails;
+    @Transient
+    private Float sum;
 
-    @OneToMany(mappedBy = "detail")
-    private Set<OrderContent> orderContents;
+    @Transient
+    private Long rank;
 
-    @OneToMany(mappedBy = "detail")
-    private Set<RequestContent> requestContents;
+    @Transient
+    private Double price;
+
+    @Transient
+    private Vendor vendor;
+
+    @Transient
+    private Float percents;
+
+    @Transient
+    private Integer count;
+
+    @Transient
+    private Integer velocityOfMoney;
+
+    public Detail(){
+        vendor = new Vendor();
+    }
 
 }

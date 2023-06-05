@@ -48,7 +48,6 @@ public class OrderController {
         }
         Order curOrder = optional.get();
         curOrder.setIsDone(order.getIsDone());
-        curOrder.setStockDetails(order.getStockDetails());
         curOrder.setVendor(order.getVendor());
         curOrder = repo.save(curOrder);
         return ResponseEntity.ok(curOrder);

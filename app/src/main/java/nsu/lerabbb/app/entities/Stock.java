@@ -3,13 +3,9 @@ package nsu.lerabbb.app.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Table(name = "stock")
 public class Stock {
@@ -34,13 +30,28 @@ public class Stock {
     @Column(name = "count",  columnDefinition = "DEFAULT 0")
     private Integer count;
 
-    @OneToMany(mappedBy = "stockDetail")
-    private Set<StockRequest> stockRequests;
+    @Transient
+    private Integer sum;
 
-    @OneToMany(mappedBy = "stockDetail")
-    private Set<SaleContent> saleContents;
+    @Transient
+    private Float percentage;
 
-    @OneToMany(mappedBy = "stockDetail")
-    private Set<Defect> defects;
+    @Transient
+    private Double purchasePrice;
+
+    public Stock(){
+        cell = new Cell();
+        detail = new Detail();
+        order = new Order();
+    }
+
+//    @OneToMany(mappedBy = "stockDetail")
+//    private Set<StockRequest> stockRequests;
+//
+//    @OneToMany(mappedBy = "stockDetail")
+//    private Set<SaleContent> saleContents;
+//
+//    @OneToMany(mappedBy = "stockDetail")
+//    private Set<Defect> defects;
 
 }

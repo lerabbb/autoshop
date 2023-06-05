@@ -1,6 +1,8 @@
 package nsu.lerabbb.app.controllers;
 
+import com.fasterxml.jackson.databind.DatabindException;
 import lombok.AllArgsConstructor;
+import nsu.lerabbb.app.Logger;
 import nsu.lerabbb.app.entities.Sale;
 import nsu.lerabbb.app.repo.SaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +60,17 @@ public class SaleController {
     public ResponseEntity delete(@PathVariable Long id){
         repo.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/profit/start={startDate}/endDate={endDate}")
+    public Integer readProfit(@PathVariable String startDate, @PathVariable String endDate) {
+        Logger.getInstance().info("start "+startDate);
+        Logger.getInstance().info("end "+endDate);
+        Optional<Object[]> optional = repo.findProfit(java.sql.Date.valueOf(startDate), java.sql.Date.valueOf(endDate));
+        if (optional.isEmpty()) {
+            throw new RuntimeException();
+        }
+        return (Integer) optional.get()[0];
     }
 
 }

@@ -1,16 +1,22 @@
 package nsu.lerabbb.app.controllers;
 
 import lombok.AllArgsConstructor;
+import nsu.lerabbb.app.entities.Request;
 import nsu.lerabbb.app.entities.SaleContent;
 import nsu.lerabbb.app.repo.SaleContentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+//TODO сделать 6 запрос!!!!
 
 @AllArgsConstructor
 @RestController
@@ -71,4 +77,30 @@ public class SaleContentController {
         repo.deleteById(saleId, stockDetailId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/cash-report/start={startDate}/end={endDate}")
+    public List<SaleContent> readCashReport(@PathVariable String startDate, @PathVariable String endDate) {
+        Optional<List<Object[]>> optional = repo.findCashReport(java.sql.Date.valueOf(startDate), java.sql.Date.valueOf(endDate));
+        if (optional.isEmpty()) {
+            throw new RuntimeException();
+        }
+        List<SaleContent> result = new ArrayList<>();
+        for (Object[] obj : optional.get()) {
+            SaleContent temp = new SaleContent();
+            temp.getSale().setId(((BigDecimal) obj[0]).longValue());
+            temp.getStockDetail().getDetail().setId(((BigDecimal) obj[1]).longValue());
+            temp.getStockDetail().getDetail().setName((String) obj[2]);
+            temp.setCount(((BigDecimal) obj[3]).intValue());
+            temp.setPrice(((Double) obj[4]).floatValue());
+            temp.setTotalSum(((Integer) obj[5]).floatValue());
+            temp.getSale().setDate((Date) obj[6]);
+            temp.getSale().getConsumer().setId(((BigDecimal) obj[7]).longValue());
+            temp.getSale().getConsumer().setLastname((String) obj[8]);
+            temp.getSale().getConsumer().setFirstname((String) obj[9]);
+            temp.getSale().getConsumer().setPatronymic((String) obj[10]);
+            result.add(temp);
+        }
+        return result;
+    }
+
 }

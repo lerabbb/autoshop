@@ -2,14 +2,18 @@ package nsu.lerabbb.app.controllers;
 
 import lombok.AllArgsConstructor;
 import nsu.lerabbb.app.Logger;
+import nsu.lerabbb.app.entities.Stock;
 import nsu.lerabbb.app.entities.Vendor;
 import nsu.lerabbb.app.repo.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,5 +80,57 @@ public class VendorController {
         return optional.get();
     }
 
+    @GetMapping("/detail={detailId}/count={count}/start={startDate}/end={endDate}")
+    public List<Vendor> readByDetailCountAndPeriod(@PathVariable Long detailId,
+                                                   @PathVariable Integer count,
+                                                   @PathVariable String startDate,
+                                                   @PathVariable String endDate)
+    {
+
+        Optional<List<Vendor>> optional = repo.findByDetailCountAndPeriod(detailId, count, Date.valueOf(startDate), Date.valueOf(endDate));
+        if (optional.isEmpty()) {
+            throw new RuntimeException();
+        }
+        return optional.get();
+    }
+
+    @GetMapping("/cheapest")
+    public List<Vendor> readCheapestVendors(){
+        Optional<List<Object[]>> optional = repo.findCheapestVendors();
+        if (optional.isEmpty()) {
+            throw new RuntimeException();
+        }
+
+        List<Vendor> result = new ArrayList<>();
+        for (Object[] obj : optional.get()) {
+            Vendor temp = new Vendor();
+            temp.setId(((BigDecimal) obj[0]).longValue());
+            temp.setName((String) obj[1]);
+            temp.setAveragePrice((Float) obj[2]);
+            result.add(temp);
+        }
+        return result;
+    }
+
+    @GetMapping("/part/detail={detail}")
+    public List<Vendor> readByDetailPart(@PathVariable Long detail){
+        Optional<List<Object[]>> optional = repo.findByDetailPart(detail);
+        if (optional.isEmpty()) {
+            throw new RuntimeException();
+        }
+
+        List<Vendor> result = new ArrayList<>();
+
+        for (Object[] obj : optional.get()) {
+            Vendor temp = new Vendor();
+            temp.setId(((BigDecimal) obj[0]).longValue());
+            temp.setName((String) obj[1]);
+            temp.setPercents((Integer) obj[2]);
+            temp.setPartAsMoney((Float) obj[3]);
+            temp.setPartAsNum((Float) obj[4]);
+            result.add(temp);
+        }
+        return result;
+    }
 }
 
